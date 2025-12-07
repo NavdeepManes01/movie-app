@@ -20,7 +20,6 @@ mongoose.connect(mongoURI, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => {
     console.log('MongoDB connection error:', err.message);
-    console.log('URI used:', mongoURI.replace(/College0421/, '****'));
 });
 
 mongoose.connection.on('connected', () => {
