@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie App - <%= title %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="/">Home</a>
+            <a href="/movies">Movies</a>
+            <a href="/login">Login</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Register</h1>
+        
+        <% if (errors.length > 0) { %>
+            <div class="error">
+                <% errors.forEach(error => { %>
+                    <p><%= error.msg %></p>
+                <% }) %>
+            </div>
+        <% } %>
+        
+        <form method="POST" action="/register">
+            <div>
+                <label>Username:</label>
+                <input type="text" name="username" value="<%= old.username || '' %>" required>
+            </div>
+            
+            <div>
+                <label>Email:</label>
+                <input type="email" name="email" value="<%= old.email || '' %>" required>
+            </div>
+            
+            <div>
+                <label>Password:</label>
+                <input type="password" name="password" required>
+            </div>
+            
+            <button type="submit">Register</button>
+        </form>
+        
+        <p>Already have an account? <a href="/login">Login here</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie App - <%= title %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="/">Home</a>
+            <a href="/movies">Movies</a>
+            <% if (user) { %>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/logout" onclick="return confirm('Are you sure you want to logout?')">Logout (<%= user.username %>)</a>
+            <% } else { %>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            <% } %>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1><%= movie.name %> (<%= movie.year %>)</h1>
+        
+        <div class="movie-details">
+            <p><strong>Description:</strong> <%= movie.description %></p>
+            <p><strong>Rating:</strong> <%= movie.rating %>/10</p>
+            <p><strong>Duration:</strong> <%= movie.duration %> minutes</p>
+            <p><strong>Genres:</strong> <%= movie.genres.join(', ') %></p>
+            <p><strong>Added by:</strong> <%= movie.addedBy.username %></p>
+        </div>
+        
+        <% if (isOwner) { %>
+            <div class="movie-actions">
+                <a href="/movies/<%= movie._id %>/edit" class="btn btn-primary">Edit Movie</a>
+                <form action="/movies/<%= movie._id %>/delete" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">Delete Movie</button>
+                </form>
+            </div>
+        <% } %>
+        
+        <a href="/movies" class="btn btn-secondary">Back to Movies</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie App - <%= title %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="/">Home</a>
+            <a href="/movies">Movies</a>
+            <a href="/movies/add">Add Movie</a>
+            <a href="/logout" onclick="return confirm('Are you sure you want to logout?')">Logout (<%= user.username %>)</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>My Dashboard</h1>
+        <h2>Welcome, <%= user.username %></h2>
+        
+        <h3>My Movies</h3>
+        
+        <% if (movies.length === 0) { %>
+            <p>You haven't added any movies yet.</p>
+            <a href="/movies/add" class="btn btn-primary">Add Your First Movie</a>
+        <% } else { %>
+            <div class="movie-grid">
+                <% movies.forEach(movie => { %>
+                    <div class="movie-card">
+                        <h4><%= movie.name %> (<%= movie.year %>)</h4>
+                        <p>Rating: <%= movie.rating %>/10</p>
+                        <p>Duration: <%= movie.duration %> minutes</p>
+                        <p>Genres: <%= movie.genres.join(', ') %></p>
+                        <div class="movie-actions">
+                            <a href="/movies/<%= movie._id %>" class="btn btn-small">View</a>
+                            <a href="/movies/<%= movie._id %>/edit" class="btn btn-small">Edit</a>
+                            <form action="/movies/<%= movie._id %>/delete" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>

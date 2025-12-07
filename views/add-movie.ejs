@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie App - <%= title %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="/">Home</a>
+            <a href="/movies">Movies</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout" onclick="return confirm('Are you sure you want to logout?')">Logout (<%= user.username %>)</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Add New Movie</h1>
+        
+        <% if (errors.length > 0) { %>
+            <div class="error">
+                <% errors.forEach(error => { %>
+                    <p><%= error.msg %></p>
+                <% }) %>
+            </div>
+        <% } %>
+        
+        <form method="POST" action="/movies/add">
+            <div>
+                <label>Movie Name:</label>
+                <input type="text" name="name" value="<%= old.name || '' %>" required>
+            </div>
+            
+            <div>
+                <label>Description:</label>
+                <textarea name="description" required><%= old.description || '' %></textarea>
+            </div>
+            
+            <div>
+                <label>Release Year:</label>
+                <input type="number" name="year" value="<%= old.year || '' %>" min="1888" max="<%= new Date().getFullYear() + 5 %>" required>
+            </div>
+            
+            <div>
+                <label>Genres:</label>
+                <div>
+                    <label><input type="checkbox" name="genres" value="Action"> Action</label>
+                    <label><input type="checkbox" name="genres" value="Comedy"> Comedy</label>
+                    <label><input type="checkbox" name="genres" value="Drama"> Drama</label>
+                    <label><input type="checkbox" name="genres" value="Horror"> Horror</label>
+                    <label><input type="checkbox" name="genres" value="Sci-Fi"> Sci-Fi</label>
+                    <label><input type="checkbox" name="genres" value="Romance"> Romance</label>
+                    <label><input type="checkbox" name="genres" value="Thriller"> Thriller</label>
+                </div>
+            </div>
+            
+            <div>
+                <label>Rating (0-10):</label>
+                <input type="number" name="rating" value="<%= old.rating || '' %>" min="0" max="10" step="0.1" required>
+            </div>
+            
+            <div>
+                <label>Duration (minutes):</label>
+                <input type="number" name="duration" value="<%= old.duration || '' %>" min="1" required>
+            </div>
+            
+            <button type="submit">Add Movie</button>
+            <a href="/movies" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

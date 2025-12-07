@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie App - <%= title %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="/">Home</a>
+            <a href="/movies">Movies</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/logout" onclick="return confirm('Are you sure you want to logout?')">Logout (<%= user.username %>)</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Edit Movie</h1>
+        
+        <% if (errors.length > 0) { %>
+            <div class="error">
+                <% errors.forEach(error => { %>
+                    <p><%= error.msg %></p>
+                <% }) %>
+            </div>
+        <% } %>
+        
+        <form method="POST" action="/movies/<%= movie._id %>/edit">
+            <div>
+                <label>Movie Name:</label>
+                <input type="text" name="name" value="<%= movie.name %>" required>
+            </div>
+            
+            <div>
+                <label>Description:</label>
+                <textarea name="description" required><%= movie.description %></textarea>
+            </div>
+            
+            <div>
+                <label>Release Year:</label>
+                <input type="number" name="year" value="<%= movie.year %>" min="1888" max="<%= new Date().getFullYear() + 5 %>" required>
+            </div>
+            
+            <div>
+                <label>Genres:</label>
+                <div>
+                    <% const genresList = ['Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Romance', 'Thriller']; %>
+                    <% genresList.forEach(genre => { %>
+                        <label>
+                            <input type="checkbox" name="genres" value="<%= genre %>" 
+                                   <%= movie.genres.includes(genre) ? 'checked' : '' %>>
+                            <%= genre %>
+                        </label>
+                    <% }) %>
+                </div>
+            </div>
+            
+            <div>
+                <label>Rating (0-10):</label>
+                <input type="number" name="rating" value="<%= movie.rating %>" min="0" max="10" step="0.1" required>
+            </div>
+            
+            <div>
+                <label>Duration (minutes):</label>
+                <input type="number" name="duration" value="<%= movie.duration %>" min="1" required>
+            </div>
+            
+            <button type="submit">Update Movie</button>
+            <a href="/movies/<%= movie._id %>" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
