@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const session = require('express-session');
 const { check, validationResult } = require('express-validator');
@@ -7,7 +9,7 @@ const path = require('path');
 
 const app = express();
 
-const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://dbUser:College0421@cluster0.dxht6mx.mongodb.net/?appName=Cluster0';
+const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://dbUser:College0421@cluster0.dxht6mx.mongodb.net/movie-app';
 
 mongoose.connect(mongoURI)
   .then(() => console.log('Connected to MongoDB'))
@@ -40,7 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(session({
-    secret: 'mysupersecretkey12345',
+    secret: process.env.SESSION_SECRET || 'development-secret',
     resave: false,
     saveUninitialized: false
 }));
