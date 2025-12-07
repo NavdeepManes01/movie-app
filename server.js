@@ -9,7 +9,7 @@ const path = require('path');
 
 const app = express();
 
-const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://dbUser:College0421@cluster0.dxht6mx.mongodb.net/movie-app';
+const mongoURI = process.env.MONGODB_URI;
 
 mongoose.connect(mongoURI, {
     useNewUrlParser: true,
