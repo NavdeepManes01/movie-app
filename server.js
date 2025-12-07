@@ -11,9 +11,29 @@ const app = express();
 
 const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://dbUser:College0421@cluster0.dxht6mx.mongodb.net/movie-app';
 
-mongoose.connect(mongoURI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.log('MongoDB error:', err.message));
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 30000,
+    socketTimeoutMS: 45000,
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => {
+    console.log('MongoDB connection error:', err.message);
+    console.log('URI used:', mongoURI.replace(/College0421/, '****'));
+});
+
+mongoose.connection.on('connected', () => {
+    console.log('Mongoose connected to DB');
+});
+
+mongoose.connection.on('error', (err) => {
+    console.log('Mongoose connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+    console.log('Mongoose disconnected');
+});
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
