@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Movie App - <%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+    <header class="site-header">
+        <nav>
+            <div class="container nav-container">
+                <a href="/" class="logo">MovieApp</a>
+
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/movies">Movies</a>
+
+                    <% if (user) { %>
+                        <a href="/dashboard">Dashboard</a>
+                        <a href="/movies/add">Add Movie</a>
+                        <a href="/logout" onclick="return confirm('Are you sure you want to logout?')">
+                            Logout (<%= user.username %>)
+                        </a>
+                    <% } else { %>
+                        <a href="/login">Login</a>
+                        <a href="/register">Register</a>
+                    <% } %>
+                </div>
+            </div>
+        </nav>
+    </header>

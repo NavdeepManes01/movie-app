@@ -1,41 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Movie App - <%= title %></title>
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-    <nav>
-        <div class="container">
-            <a href="/">Home</a>
-            <a href="/movies">Movies</a>
-            <% if (user) { %>
-                <a href="/dashboard">Dashboard</a>
-                <a href="/movies/add">Add Movie</a>
-                <a href="/logout" onclick="return confirm('Are you sure you want to logout?')">Logout (<%= user.username %>)</a>
-            <% } else { %>
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
-            <% } %>
+<%- include('partials/header', { title: 'Home', user: user }) %>
+
+<div class="container page-container">
+    <h1>Movie Database</h1>
+    <p>Welcome to our movie collection.</p>
+    <p>Browse movies or register to add your own.</p>
+
+    <% if (!user) { %>
+        <div class="auth-buttons">
+            <a href="/register" class="btn btn-primary">Register</a>
+            <a href="/login" class="btn btn-primary">Login</a>
         </div>
-    </nav>
-    
-    <div class="container">
-        <h1>Movie Database</h1>
-        <p>Welcome to our movie collection.</p>
-        <p>Browse movies or register to add your own.</p>
-        
-        <% if (!user) { %>
-            <div class="auth-buttons">
-                <a href="/register" class="btn btn-primary">Register</a>
-                <a href="/login" class="btn btn-secondary">Login</a>
-            </div>
-        <% } else { %>
-            <div class="dashboard-links">
-                <a href="/movies/add" class="btn btn-primary">Add New Movie</a>
-                <a href="/dashboard" class="btn btn-secondary">My Dashboard</a>
-            </div>
-        <% } %>
-    </div>
-</body>
-</html>
+    <% } else { %>
+        <div class="dashboard-links">
+            <a href="/movies/add" class="btn btn-primary">Add New Movie</a>
+            <a href="/dashboard" class="btn btn-primary">My Dashboard</a>
+        </div>
+    <% } %>
+</div>
+
+<%- include('partials/footer') %>

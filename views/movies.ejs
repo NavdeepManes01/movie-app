@@ -1,44 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Movie App - <%= title %></title>
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-    <nav>
-        <div class="container">
-            <a href="/">Home</a>
-            <% if (user) { %>
-                <a href="/dashboard">Dashboard</a>
-                <a href="/movies/add">Add Movie</a>
-                <a href="/logout" onclick="return confirm('Are you sure you want to logout?')">Logout (<%= user.username %>)</a>
-            <% } else { %>
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
-            <% } %>
-        </div>
-    </nav>
-    
-    <div class="container">
-        <h1>All Movies</h1>
-        
-        <% if (user) { %>
-            <a href="/movies/add" class="btn btn-primary">Add New Movie</a>
-        <% } %>
-        
-        <div class="movie-grid">
-            <% movies.forEach(movie => { %>
-                <div class="movie-card">
-                    <h3><%= movie.name %> (<%= movie.year %>)</h3>
-                    <p><%= movie.description.substring(0, 100) %>...</p>
-                    <p>Rating: <strong><%= movie.rating %>/10</strong></p>
-                    <p>Duration: <%= movie.duration %> minutes</p>
-                    <p>Genres: <%= movie.genres.join(', ') %></p>
-                    <p>Added by: <%= movie.addedBy.username %></p>
-                    <a href="/movies/<%= movie._id %>" class="btn">View Details</a>
-                </div>
-            <% }) %>
-        </div>
+<%- include('partials/header', { title: 'Movies', user: user }) %>
+
+<div class="container page-container">
+    <h1>All Movies</h1>
+
+    <% if (user) { %>
+        <a href="/movies/add" class="btn btn-primary">Add New Movie</a>
+    <% } %>
+
+    <div class="movie-grid">
+        <% movies.forEach(movie => { %>
+            <div class="movie-card">
+                <h3><%= movie.name %> (<%= movie.year %>)</h3>
+                <p><%= movie.description.substring(0, 100) %>...</p>
+                <p>Rating: <strong><%= movie.rating %>/10</strong></p>
+                <p>Duration: <%= movie.duration %> minutes</p>
+                <p>Genres: <%= movie.genres.join(', ') %></p>
+                <p>Added by: <%= movie.addedBy.username %></p>
+                <a href="/movies/<%= movie._id %>" class="btn">View Details</a>
+            </div>
+        <% }) %>
     </div>
-</body>
-</html>
+</div>
+
+<%- include('partials/footer') %>
