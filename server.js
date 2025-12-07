@@ -3,6 +3,7 @@ const session = require('express-session');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
+const path = require('path'); 
 
 const app = express();
 
@@ -33,7 +34,8 @@ const movieSchema = new mongoose.Schema({
 const Movie = mongoose.model('Movie', movieSchema);
 
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
